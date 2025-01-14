@@ -1,4 +1,4 @@
-SERVICE CKA SINAV SORU ÇÖZÜMLERİ
+SERVICE CKA SOLUTIONS
 A1:
 kubectl edit deployment front-end
 add:
@@ -9,7 +9,7 @@ kubectl expose deployment front-end --name front-end-service --port 80 --type=No
 --------------------------
 
 
-SERVICE CKA SINAV SORU ÇÖZÜMLERİ
+SERVICE CKA SOLUTIONS
 A2:
 kubectl run nginx-pod --image=nginx -o yaml > nginx-pod.yaml
 create pod
