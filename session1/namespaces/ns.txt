@@ -1,15 +1,23 @@
-NAME SPACES
-Kubernetes'te Namespace, cluster içinde mantıksal olarak ayrılmış bir alan sağlar ve kaynakları izole etmek için kullanılır. Özellikle büyük ve çoklu kullanıcı barındıran cluster'larda, farklı uygulama veya ekiplerin kaynaklarının birbirinden ayrılması için idealdir.
-Namespace'in Özellikleri ve Kullanım Alanları
-Kaynak İzolasyonu: Farklı projeler, ekipler veya ortamlar (ör. geliştirme, test, üretim) için ayrı kaynaklar tanımlayarak izolasyon sağlar.
-İsim Çakışmalarını Engelleme: Farklı namespace'lerde aynı isimli kaynaklar (ör. pod'lar veya servisler) oluşturulabilir, bu da isim çakışmalarını önler.
-Erişim Kontrolü: Role-Based Access Control (RBAC) ile namespace düzeyinde erişim kontrolü sağlar. Bu sayede her ekip yalnızca kendi namespace'ine erişebilir.
-Kaynak Kotaları: Her namespace için belirli kaynak kotaları (ör. CPU, bellek) tanımlanarak kaynak yönetimi sağlanabilir.
+**NAME SPACES**  
+In Kubernetes, a Namespace provides a logically separated area within a cluster and is used to isolate resources. This is especially useful in large, multi-user clusters to separate resources for different applications or teams.  
+
+### Features and Use Cases of Namespaces
+- **Resource Isolation:** Ensures isolation by defining separate resources for different projects, teams, or environments (e.g., development, testing, production).
+- **Avoiding Name Conflicts:** Allows the creation of resources (e.g., pods or services) with the same name in different namespaces, preventing name conflicts.
+- **Access Control:** Provides namespace-level access control using Role-Based Access Control (RBAC), so each team can only access their own namespace.
+- **Resource Quotas:** Enables resource management by setting quotas (e.g., CPU, memory) for each namespace.
+
+### Commands:
+```bash
 kubectl get ns 
-# namespaces listeler
-kubectl create ns deneme-ns
-# deneme-ns ismine bir namespace oluşturur 
-kubectl run web-pod --image=nginx -n deneme-ns 
-# oluşturulan web-pod isimli pod deneme-ns isimli namespace içinde yer alır 
-kubectl get pods -n deneme-ns
-#deneme-ns isimli namespace içeriğindeki podları listeler
+# Lists namespaces
+
+kubectl create ns example-ns
+# Creates a namespace named example-ns
+
+kubectl run web-pod --image=nginx -n example-ns
+# Creates a pod named web-pod in the example-ns namespace
+
+kubectl get pods -n example-ns
+# Lists pods in the example-ns namespace
+```
