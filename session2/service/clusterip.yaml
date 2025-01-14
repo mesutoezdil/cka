@@ -7,7 +7,7 @@ spec:
     app: nginx
   ports:
     - protocol: TCP
-      port: 80      # Servis portu
-      targetPort: 80 # Pod içindeki hedef port
+      port: 80      # Service port
+      targetPort: 80 # target port in pod
   type: ClusterIP
 
