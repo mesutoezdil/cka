@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: myapp-v1
 spec:
-  replicas: 3  # Eski sürüm için daha fazla pod
+  replicas: 3  # more pods for old version
   selector:
     matchLabels:
       app: myapp
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: myapp-container
-        image: myapp:v1.0  # Eski sürüm
+        image: myapp:v1.0  # old version
         ports:
         - containerPort: 80
 
