@@ -1,23 +1,21 @@
-**NAME SPACES**  
+NAME SPACES
 In Kubernetes, a Namespace provides a logically separated area within a cluster and is used to isolate resources. This is especially useful in large, multi-user clusters to separate resources for different applications or teams.  
 
-### Features and Use Cases of Namespaces
-- **Resource Isolation:** Ensures isolation by defining separate resources for different projects, teams, or environments (e.g., development, testing, production).
-- **Avoiding Name Conflicts:** Allows the creation of resources (e.g., pods or services) with the same name in different namespaces, preventing name conflicts.
-- **Access Control:** Provides namespace-level access control using Role-Based Access Control (RBAC), so each team can only access their own namespace.
-- **Resource Quotas:** Enables resource management by setting quotas (e.g., CPU, memory) for each namespace.
+Features and Use Cases of Namespaces
+- Resource Isolation:** Ensures isolation by defining separate resources for different projects, teams, or environments (e.g., development, testing, production).
+- Avoiding Name Conflicts:** Allows the creation of resources (e.g., pods or services) with the same name in different namespaces, preventing name conflicts.
+- Access Control:** Provides namespace-level access control using Role-Based Access Control (RBAC), so each team can only access their own namespace.
+- Resource Quotas:** Enables resource management by setting quotas (e.g., CPU, memory) for each namespace.
 
-### Commands:
-```bash
+Commands:
+
 kubectl get ns 
-# Lists namespaces
-
 kubectl create ns example-ns
-# Creates a namespace named example-ns
+
+Creates a namespace named example-ns
 
 kubectl run web-pod --image=nginx -n example-ns
-# Creates a pod named web-pod in the example-ns namespace
+
+Creates a pod named web-pod in the example-ns namespace
 
 kubectl get pods -n example-ns
-# Lists pods in the example-ns namespace
-```
