@@ -5,10 +5,10 @@ metadata:
 spec:
   containers:
   - name: main-container
-    image: nginx 
+    image: nginx
     volumeMounts:
     - name: log-volume
-      mountPath: /var/log
+      mountPath: /var/log/nginx
   volumes:
   - name: log-volume
     emptyDir: {}
