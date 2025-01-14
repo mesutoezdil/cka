@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: myapp-container
-        image: myapp:v2.0   # Yeni sürüm imajı
+        image: myapp:v2.0   # image of new version
         ports:
         - containerPort: 80
 
