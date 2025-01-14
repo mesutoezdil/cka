@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-v2
+spec:
+  replicas: 1  # less pods for new version
+  selector:
+    matchLabels:
+      app: myapp
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: myapp
+        version: v2
+    spec:
+      containers:
+      - name: myapp-container
+        image: myapp:v2.0  # new version
+        ports:
+        - containerPort: 80
+
