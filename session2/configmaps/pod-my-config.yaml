@@ -15,4 +15,5 @@ spec:
       configMap:                        # Type of the volume, here it's created from a ConfigMap.
         name: myconfigmap               # Name of the ConfigMap used to create the volume, here it's "myconfigmap".
 
-#myconfigmap --> volumes/name --> container/volumeMounts/name
+#myconfigmap gives info the voluem of pod 
+#volume is mounted in the container
