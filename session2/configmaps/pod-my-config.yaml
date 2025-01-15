@@ -4,13 +4,13 @@ metadata:
   name: mypod
 spec:
   containers:
-    - name: mypod
-      image: redis
+    - name: mypod                       # Name of the container inside the Pod.
+      image: redis                      # Image used for the container, here it's the Redis image.
       volumeMounts:
-        - name: opslab                    # Defines which volumes the container will mount.
-          mountPath: "/etc/foo"           # Directory path where the volume will be mounted, specified as "/etc/foo".
-          readOnly: true                  # Mounts the volume as read-only (write operations are restricted).
-  volumes:                                # Section where volumes belonging to the pod are defined.
-    - name: opslab                        # Volume name, defined here as "opslab".
-      configMap:                          # Volume type, using a ConfigMap to create the volume.
-        name: myconfigmap                 # ConfigMap name, using the ConfigMap named "myconfigmap".
+        - name: opslab                  # Name of the volume being mounted into the container.
+          mountPath: "/etc/foo"         # Path inside the container where the volume will be mounted.
+          readOnly: true                # The volume is mounted as read-only (write operations are restricted).
+  volumes:                              # Section where volumes used by the pod are defined.
+    - name: opslab                      # Name of the volume, referred to as "opslab".
+      configMap:                        # Type of the volume, here it's created from a ConfigMap.
+        name: myconfigmap               # Name of the ConfigMap used to create the volume, here it's "myconfigmap".
