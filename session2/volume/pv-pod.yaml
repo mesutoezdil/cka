@@ -1,19 +1,18 @@
-apiVersion: v1                                # API sürümü, burada v1 kullanılıyor.
-kind: Pod                                     # Kaynak türü, bu örnekte Pod.
+apiVersion: v1                                # API version, using v1 here.
+kind: Pod                                     # Resource type, in this case, a Pod.
 metadata:
-  name: task-pv-pod                           # Pod'un adı, benzersiz olmalı.
+  name: task-pv-pod                           # Name of the Pod, must be unique.
 spec:
-  volumes:                                    # Pod içerisinde kullanılacak volume'lar.
-    - name: task-pv-storage                   # Volume ismi.
-      persistentVolumeClaim:                  # Persistent Volume Claim ile volume bağlantısı.
-        claimName: task-pv-claim              # Bu PVC'nin adı, daha önce oluşturulmuş PVC'yi kullanıyoruz.
-  containers:                                 # Pod içerisinde çalışacak container'lar.
-    - name: task-pv-container                 # Container ismi.
-      image: nginx                             # Kullanılacak Docker imajı, burada nginx imajı kullanılıyor.
-      ports:                                   # Container'ın dışarıya açacağı portlar.
-        - containerPort: 80                   # Container içinde 80 portu açılıyor.
-          name: "http-server"                  # Port'a verilen isim, bu örnekte http-server.
-      volumeMounts:                            # Container'lar içinde volume montajları.
-        - mountPath: "/usr/share/nginx/html"   # Volume'un container içerisinde hangi dizine bağlanacağını belirtir.
-          name: task-pv-storage               # Mount edilen volume'un ismi, yukarıdaki 'task-pv-storage' ile eşleşir.
-
+  volumes:                                    # Volumes to be used within the Pod.
+    - name: task-pv-storage                   # Name of the volume.
+      persistentVolumeClaim:                  # Linking the volume to a Persistent Volume Claim.
+        claimName: task-pv-claim              # Name of the PVC, using a previously created PVC.
+  containers:                                 # Containers to run within the Pod.
+    - name: task-pv-container                 # Name of the container.
+      image: nginx                            # Docker image to use, here the nginx image is used.
+      ports:                                  # Ports exposed by the container.
+        - containerPort: 80                   # Exposes port 80 inside the container.
+          name: "http-server"                 # Name given to the port, in this case, http-server.
+      volumeMounts:                           # Volume mounts within the containers.
+        - mountPath: "/usr/share/nginx/html"  # Path in the container where the volume will be mounted.
+          name: task-pv-storage               # Name of the mounted volume, matching 'task-pv-storage' above.
