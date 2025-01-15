@@ -7,7 +7,7 @@ spec:
     - name: mypod
       image: redis
       volumeMounts:
-        - name: opslab                     # Defines which volumes the container will mount.
+        - name: opslab                    # Defines which volumes the container will mount.
           mountPath: "/etc/foo"           # Directory path where the volume will be mounted, specified as "/etc/foo".
           readOnly: true                  # Mounts the volume as read-only (write operations are restricted).
   volumes:                                # Section where volumes belonging to the pod are defined.
