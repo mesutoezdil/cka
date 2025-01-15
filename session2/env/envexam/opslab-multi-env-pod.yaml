@@ -8,10 +8,9 @@ spec:
       image: nginx
       env:
         - name: USER
-          value: "admin"               # Ortam değişkeni USER, değeri admin olarak ayarlandı
+          value: "admin"               # Environment variable USER is set with the value "admin"
     - name: busybox-container
       image: busybox
       command:
-        - sleep                        # Komut kısmı alt alta olacak şekilde ayarlandı
+        - sleep                        # Command is specified line by line
         - "4000"
-
