@@ -7,14 +7,14 @@ spec:
   - host: opslab.com
     http:
       paths:
-      - path: /resimler # /resimler adresi 'resim -service' adlı servise gider
+      - path: /images # The /images path routes to the service named 'resim-service'
         pathType: Prefix
         backend:
           service:
             name: resim-service
             port:
               number: 80
-      - path: /videolar # /videolar adresi 'video-service' adlı servise gider
+      - path: /videos # The /videos path routes to the service named 'video-service'
         pathType: Prefix
         backend:
           service:
@@ -43,8 +43,7 @@ spec:
   selector:
     app: video
   ports:
-    - protocol: TiCP
+    - protocol: TCP
       port: 80
       targetPort: 80
   type: ClusterIP
-
