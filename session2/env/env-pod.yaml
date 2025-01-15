@@ -7,8 +7,7 @@ spec:
     - name: example-container
       image: nginx
       env:
-        - name: ENV_VAR_1        # Ortam değişkeni adı
-          value: "Value1"        # Ortam değişkeninin değeri
+        - name: ENV_VAR_1        # Name of the environment variable
+          value: "Value1"        # Value of the environment variable
         - name: ENV_VAR_2
           value: "Value2"
-
