@@ -1,8 +1,7 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: local-storage        # Local depolama için StorageClass adı
-provisioner: kubernetes.io/no-provisioner  # Yerel depolama sağlayıcısı, otomatik PV oluşturmaz
-volumeBindingMode: WaitForFirstConsumer    # İlk kullanım talebi geldiğinde bağlama
-reclaimPolicy: Retain                      # Silindiğinde PV'yi tutar
-
+  name: local-storage        # Name of the StorageClass for local storage
+provisioner: kubernetes.io/no-provisioner  # Local storage provisioner, does not create PVs automatically
+volumeBindingMode: WaitForFirstConsumer    # Binds the volume when a claim is made by the first consumer
+reclaimPolicy: Retain                      # Retains the PV when the PVC is deleted
