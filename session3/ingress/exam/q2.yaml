@@ -1,19 +1,20 @@
-apiVersion: networking.k8s.io/v1       # Ingress API sürümü
-kind: Ingress                          # Kaynak tipi Ingress olarak belirtilir
+```yaml
+apiVersion: networking.k8s.io/v1       # Ingress API version
+kind: Ingress                          # Resource type specified as Ingress
 metadata:
-  name: pong                           # Ingress kaynağının adı
-  namespace: ing-internal              # Kaynağın oluşturulacağı namespace
+  name: pong                           # Name of the Ingress resource
+  namespace: ing-internal              # Namespace where the resource will be created
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /    # Yolu root (/) olarak yeniden yazmak için kullanılan annotation
+    nginx.ingress.kubernetes.io/rewrite-target: /    # Annotation used to rewrite the path to root (/)
 spec:
   rules:
   - http:
       paths:
-      - path: /hello                   # /hello yoluna gelen isteklerin yönlendirilmesi
-        pathType: Prefix               # Prefix tipi ile belirli bir yolun başlangıcına göre yönlendirme yapılır
+      - path: /hello                   # Redirecting requests coming to the /hello path
+        pathType: Prefix               # Prefix type used to redirect based on the beginning of a specific path
         backend:
           service:
-            name: hello                # İsteklerin yönlendirileceği servis adı
+            name: hello                # Name of the service to which requests will be redirected
             port:
-              number: 5678             # Servisin hedef port numarası
-
+              number: 5678             # Target port number of the service
+```
