@@ -14,3 +14,5 @@ spec:
     - name: opslab                      # Name of the volume, referred to as "opslab".
       configMap:                        # Type of the volume, here it's created from a ConfigMap.
         name: myconfigmap               # Name of the ConfigMap used to create the volume, here it's "myconfigmap".
+
+#myconfigmap --> volumes/name --> container/volumeMounts/name
