@@ -1,10 +1,10 @@
   accessModes:
     - ReadWriteOnce            
-      # Tek bir node'dan okuma ve yazma erişimi sağlar.
-      # Bu mod, bir volume’un yalnızca tek bir node'a monte edilmesine izin verir.
+      # Provides read and write access from a single node.
+      # This mode allows a volume to be mounted by only one node at a time.
     - ReadOnlyMany            
-      # Birden fazla node'un aynı anda sadece okuma erişimine sahip olmasını sağlar. 
-      # Volume, birden fazla node tarafından yalnızca okuma amaçlı olarak kullanılabilir.
+      # Allows multiple nodes to have read-only access simultaneously.
+      # The volume can be used by multiple nodes but only for read operations.
     - ReadWriteMany           
-      # Birden fazla node'un aynı anda okuma ve yazma erişimine sahip olmasını sağlar.
-      # Bu, birden fazla node'un aynı volume’u hem okuma hem de yazma için kullanabilmesi anlamına gelir.
+      # Allows multiple nodes to have read and write access simultaneously.
+      # This means multiple nodes can use the same volume for both reading and writing.
