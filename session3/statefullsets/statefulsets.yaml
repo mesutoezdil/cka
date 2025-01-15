@@ -3,8 +3,8 @@ kind: StatefulSet
 metadata:
   name: my-app
 spec:
-  serviceName: "my-app-service"  # Ağ kimliği için sabit bir servis tanımlıyoruz
-  replicas: 3                    # Pod sayısı
+  serviceName: "my-app-service"         # We define a stable service for network identity
+  replicas: 3                           # Number of Pods
   selector:
     matchLabels:
       app: my-app
@@ -15,19 +15,18 @@ spec:
     spec:
       containers:
       - name: my-app-container
-        image: nginx                   # Örnek bir uygulama görüntüsü (nginx)
+        image: nginx                    # Example application image (nginx)
         ports:
         - containerPort: 80
-        volumeMounts:                  # Kalıcı depolama alanı tanımlaması
+        volumeMounts:                   # Persistent storage definition
         - name: my-storage
-          mountPath: "/usr/share/nginx/html"  # Pod içinde kalıcı olarak kullanılacak yol
-  volumeClaimTemplates:                # Kalıcı Depolama (Persistent Storage) tanımlaması
+          mountPath: "/usr/share/nginx/html"  # Path within the Pod for persistent use
+  volumeClaimTemplates:                 # Persistent Storage definition
   - metadata:
       name: my-storage
     spec:
-      accessModes: [ "ReadWriteOnce" ] # Sadece belirli pod için okuma/yazma izni
-      storageClassName: "my-storage-class" # Depolama sınıfı (daha önce tanımlı olmalı)
+      accessModes: [ "ReadWriteOnce" ]  # Read/Write access allowed for a single Pod
+      storageClassName: "my-storage-class" # Storage class (must be pre-defined)
       resources:
         requests:
-          storage: 1Gi                 # Her bir pod için 1 GiB depolama alanı
-
+          storage: 1Gi                  # 1 GiB storage requested for each Pod
