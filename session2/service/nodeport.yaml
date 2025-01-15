@@ -1,14 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-nodeport
+  name: nginx-nodeport             # Name of the Service
 spec:
   selector:
-    app: nginx
+    app: nginx                     # Selects Pods with the label 'app: nginx'
   ports:
-    - protocol: TCP
-      port: 80            # Servisin dinlediği dahili port
-      targetPort: 80      # Pod'daki hedef port
-      nodePort: 30080     # Dış dünyaya açılan port
-  type: NodePort
-
+    - protocol: TCP                # Protocol used, in this case, TCP
+      port: 80                     # Internal port on which the Service listens
+      targetPort: 80               # Target port in the Pod
+      nodePort: 30080              # Port exposed to the external world
+  type: NodePort                   # Service type, exposes the Service on a specified NodePort
