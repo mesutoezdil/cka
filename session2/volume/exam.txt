@@ -1,4 +1,4 @@
-CKA-CKAD VOLUME SORULARI
+CKA-CKAD VOLUME 
 Q1:
 Q2:
 Create a persistent volume with name app-data, of capacity 10Mi and access mode ReadOnlyMany. The type of volume is hostPath and its location is “/srv/app-data”
