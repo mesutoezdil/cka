@@ -1,0 +1,14 @@
+apiVersion: v1                              # API version, "v1" is used for Pod resources.
+kind: Pod                                   # Type of Kubernetes resource, here it's a Pod.
+metadata:
+  name: web-server                         # Name of the Pod, defined as "web-server".
+spec:
+  containers:                              # Section where containers within the Pod are defined.
+    - name: nginx                          # Name of the container, defined as "nginx".
+      image: nginx                         # Docker image to be used, here it's the Nginx image.
+      env:                                 # Environment variables defined for the container.
+        - name: USER                       # Name of the environment variable, defined as "USER".
+          valueFrom:                       # The value of the environment variable is sourced indirectly.
+            configMapKeyRef:               # Specifies that the value is sourced from a ConfigMap.
+              name: myconfigmap            # The ConfigMap to be used, named "myconfigmap".
+              key: USER                    # The specific key in the ConfigMap to retrieve the value for the variable.
