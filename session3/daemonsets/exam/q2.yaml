@@ -8,13 +8,12 @@ spec:
     image: nginx
     resources:
       requests:
-        # CPU için minimum istek: Pod, en az 100m (millicore) CPU talep eder
+        # Minimum CPU request: Pod requests at least 100m (millicore) of CPU
         cpu: 100m 
-        # Bellek için minimum istek: Pod, en az 200Mi bellek talep eder
+        # Minimum memory request: Pod requests at least 200Mi of memory
         memory: 200Mi
       limits:
-        # CPU için maksimum limit: Pod, en fazla 200m (millicore) CPU kullanabilir
+        # Maximum CPU limit: Pod can use up to 200m (millicore) of CPU
         cpu: 200m
-        # Bellek için maksimum limit: Pod, en fazla 400Mi bellek kullanabilir
+        # Maximum memory limit: Pod can use up to 400Mi of memory
         memory: 400Mi
-
