@@ -1,5 +1,5 @@
 Q1
-CKA-CKAD JOBs SORULARI
+CKA-CKAD JOBs 
 Create a new nginx Ingress resource as follows:
 ✑ Name: pong
 ✑ Namespace: ing-internal
