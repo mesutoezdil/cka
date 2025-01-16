@@ -1,17 +1,34 @@
-CKA-CKAD RBAC CEVAPLARI
-ServiceAccount Oluşturma
+### CKA-CKAD RBAC Guide (English)
 
+#### **Step 1: Create a ServiceAccount**
+Create a ServiceAccount named `cicd-token` in the `app-team1` namespace.
+
+```bash
 kubectl create serviceaccount cicd-token --namespace=app-team1
-ClusterRole Oluşturma
-deployment-clusterrole adında bir ClusterRole oluşturacağız. Bu role, sadece Deployment, StatefulSet ve DaemonSet kaynaklarını oluşturma izni verecek 
+```
 
+---
+
+#### **Step 2: Create a ClusterRole**
+We will create a ClusterRole named `deployment-clusterrole`. This role will grant permissions to create only **Deployment**, **StatefulSet**, and **DaemonSet** resources.
+
+```bash
 kubectl create clusterrole deployment-clusterrole --verb=create --resource=deployments,statefulsets,daemonsets
-ClusterRoleBinding Oluşturma
-Son olarak, deployment-clusterrole rolünü cicd-token ServiceAccount'ına bağlamak için bir ClusterRoleBinding oluşturacağız. Bu bağlamada, rol sadece app-team1 namespace'inde geçerli olacaktır.
+```
 
+---
+
+#### **Step 3: Create a ClusterRoleBinding**
+Finally, we will create a ClusterRoleBinding to bind the `deployment-clusterrole` role to the `cicd-token` ServiceAccount. This binding will restrict the role to be valid only within the `app-team1` namespace.
+
+```bash
 kubectl create rolebinding cicd-token-binding --clusterrole=deployment-clusterrole --serviceaccount=app-team1:cicd-token \
  --namespace=app-team1
-ClusterRole oluşturduk (deployment-clusterrole).
-ServiceAccount oluşturduk (cicd-token).
-ClusterRoleBinding ile bu rolü ServiceAccount'a bağladık ve bunu sadece app-team1 namespace'ine sınırladık.
-A1:
+```
+
+---
+
+### **Summary**
+1. Created a **ClusterRole** (`deployment-clusterrole`).
+2. Created a **ServiceAccount** (`cicd-token`).
+3. Linked the ClusterRole to the ServiceAccount using a **ClusterRoleBinding**, limiting its scope to the `app-team1` namespace.
