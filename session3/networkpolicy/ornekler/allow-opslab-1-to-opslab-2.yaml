@@ -1,31 +1,28 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-opslab-1-to-opslab-2  # Policy adı, sadece opslab-1 pod'unun opslab-2 pod'una erişimini sağlar
-  namespace: default  # Bu politika, default namespace için geçerlidir
+  name: allow-opslab-1-to-opslab-2  # The policy name specifies that only the "opslab-1" pod is allowed to access the "opslab-2" pod
+  namespace: default  # This policy is applicable within the "default" namespace
 spec:
   podSelector:
     matchLabels:
-      app: opslab-2  # Bu policy, sadece app: opslab-2 etiketine sahip pod'lara uygulanır
+      app: opslab-2  # This policy applies only to pods with the label "app: opslab-2"
   ingress:
   - from:
     - podSelector:
         matchLabels:
-          app: opslab-1  # Sadece app: opslab-1 etiketine sahip pod'lardan gelen trafiğe izin verir
+          app: opslab-1  # Allows traffic only from pods with the label "app: opslab-1"
   policyTypes:
-  - Ingress  # Policy tipi olarak yalnızca Ingress (gelen trafik) seçilmiştir; böylece sadece gelen trafiği kısıtlar
+  - Ingress  # The policy type is limited to Ingress (incoming traffic) only; it restricts only incoming traffic
 
 ---
-  #name: allow-opslab-1-to-opslab-2 ismi, yalnızca opslab-1 pod'unun opslab-2 pod'una erişimine izin veren bir politika olduğunu belirtir.
-  #
-  #namespace: default olarak belirtilmiştir, yani bu politika default namespace içindeki pod'lar için geçerlidir.
-  #
-  #podSelector: Bu policy'nin hedefi app: opslab-2 etiketine sahip pod'lardır. Yani bu policy, opslab-2 pod'una gelen trafiği kontrol eder.
-  #
-  #ingress: from altında tanımlanan podSelector, yalnızca app: opslab-1 etiketine sahip pod'lardan gelen trafiğe
-  # izin verilmesini sağlar. Diğer tüm pod'lardan gelen trafik engellenir.
-  #
-  #policyTypes: Burada sadece Ingress (gelen trafik) olarak belirtilmiştir. Bu durumda, sadece opslab-2 
-  #pod'una gelen trafik kısıtlanmış olur; dışarıya giden trafik (Egress) ise etkilenmez.
-
-
+# name: The "allow-opslab-1-to-opslab-2" policy ensures that only the "opslab-1" pod is allowed to access the "opslab-2" pod.
+#
+# namespace: Specified as "default," meaning this policy applies to pods within the "default" namespace.
+#
+# podSelector: Targets pods labeled "app: opslab-2," meaning this policy controls incoming traffic to the "opslab-2" pod.
+#
+# ingress: The "from" clause with a podSelector ensures that traffic is allowed only from pods labeled "app: opslab-1." 
+# All other traffic from any other pod is denied.
+#
+# policyTypes: Defined as Ingress, so the policy only restricts incoming traffic to the "opslab-2" pod. Outgoing traffic (Egress) is unaffected.
