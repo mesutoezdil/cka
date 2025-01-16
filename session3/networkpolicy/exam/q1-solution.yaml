@@ -1,19 +1,18 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-port-from-namespace  # Policy adı; internal namespace'indeki pod'ların, fubar namespace'indeki pod'ların 9000 numaralı portuna erişimini sağlar
-  namespace: fubar  # Bu NetworkPolicy, fubar namespace'i içindeki pod'lar için geçerlidir
+  name: allow-port-from-namespace  # The policy name specifies that pods in the "internal" namespace can access port 9000 of pods in the "fubar" namespace
+  namespace: fubar  # This NetworkPolicy applies to pods within the "fubar" namespace
 spec:
   podSelector:
-    matchLabels: {}  # Boş bırakıldığı için fubar namespace'i içindeki tüm pod'lar hedeflenir
+    matchLabels: {}  # Targets all pods within the "fubar" namespace, as no specific labels are specified
   ingress:
   - from:
     - namespaceSelector:
         matchLabels:
-          name: internal  # Sadece internal namespace'indeki pod'lardan gelen trafiğe izin verir
+          name: internal  # Allows traffic only from pods in namespaces labeled "name: internal"
     ports:
-    - protocol: TCP  # TCP protokolü ile gelen trafiğe izin verir
-      port: 9000  # Sadece 9000 numaralı port üzerinden gelen trafiğe izin verir
+    - protocol: TCP  # Permits traffic using the TCP protocol
+      port: 9000  # Restricts access to traffic on port 9000 only
   policyTypes:
-  - Ingress  # Bu NetworkPolicy yalnızca gelen trafiği (Ingress) kontrol eder
-
+  - Ingress  # The NetworkPolicy controls only incoming traffic (Ingress)
