@@ -1,19 +1,18 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-port-from-namespace  # NetworkPolicy adı, internal namespace'indeki pod'ların echo namespace'inde belirli bir porta erişimine izin verir
-  namespace: echo  # Bu NetworkPolicy, echo namespace'inde uygulanır
+  name: allow-port-from-namespace  # The NetworkPolicy name allows pods in the "internal" namespace to access a specific port in the "echo" namespace
+  namespace: echo  # This NetworkPolicy is applied in the "echo" namespace
 spec:
   podSelector:
-    matchLabels: {}  # Boş bırakıldığı için echo namespace'indeki tüm pod'ları hedefler
+    matchLabels: {}  # Targets all pods within the "echo" namespace, as no specific labels are specified
   ingress:
   - from:
     - namespaceSelector:
         matchLabels:
-          name: internal  # Sadece internal namespace'indeki pod'lardan gelen trafiğe izin verilir
+          name: internal  # Allows traffic only from pods in namespaces labeled "name: internal"
     ports:
-    - protocol: TCP  # Sadece TCP protokolü ile gelen trafiğe izin verilir
-      port: 9200  # Sadece 9200 numaralı port üzerinden erişime izin verir
+    - protocol: TCP  # Allows traffic only using the TCP protocol
+      port: 9200  # Permits access only to traffic on port 9200
   policyTypes:
-  - Ingress  # Bu NetworkPolicy yalnızca gelen trafiği (Ingress) kontrol eder
-
+  - Ingress  # This NetworkPolicy controls only incoming traffic (Ingress)
