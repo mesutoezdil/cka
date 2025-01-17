@@ -1,45 +1,32 @@
+Kubernetes Worker Node and Master Node Upgrade Steps
+Worker Node: Upgrade kubeadm
+SSH into the worker node:
 ssh worker-node
-
-# Upgrade kubeadm:
+Upgrade kubeadm to the desired version (replace x with the latest patch version for 1.31):
 sudo apt-mark unhold kubeadm && \
-sudo apt-get update && sudo apt-get install -y kubeadm='1.31.x-*' && \
+sudo apt-get update && sudo apt-get install -y kubeadm=1.31.x-* && \
 sudo apt-mark hold kubeadm
-
-#Call "kubeadm upgrade" 
+Upgrade the node using kubeadm:
 sudo kubeadm upgrade node
-
-
-
-
-ssh master-node/controlplane
-
-#Düğümü bakıma hazırlamak için onu planlanamaz olarak işaretleyin ve iş yüklerini kaldırın:
+Master Node: Prepare for Maintenance
+SSH into the master/control plane node:
+ssh master-node
+Mark the node as unschedulable and drain workloads:
 kubectl drain <node-to-drain> --ignore-daemonsets
-
-
-
-ssh worker-node
-
-#Kubelet ve kubectl'i yükseltin:
+Worker Node: Upgrade kubelet and kubectl
+Return to the worker node and upgrade kubelet and kubectl:
 sudo apt-mark unhold kubelet kubectl && \
-sudo apt-get update && sudo apt-get install -y kubelet='1.31.x-*' kubectl='1.31.x-*' && \
+sudo apt-get update && sudo apt-get install -y kubelet=1.31.x-* kubectl=1.31.x-* && \
 sudo apt-mark hold kubelet kubectl
-
-#Kubelet'i yeniden başlatın:
+Restart kubelet:
 sudo systemctl daemon-reload
 sudo systemctl restart kubelet
-
-
-
-
-
-
-ssh master-node/controlplane
-
-Düğümü planlanabilir olarak işaretleyerek tekrar çevrimiçi hale getirin:
+Master Node: Restore Node Availability
+Return to the master/control plane node and uncordon the node:
 kubectl uncordon <node-to-uncordon>
-
-
-Kümenin durumunu doğrulayın 
+Verify the cluster status:
 kubectl get nodes
-
+Notes
+Replace <node-to-drain> and <node-to-uncordon> with the appropriate node names.
+Always verify compatibility between kubeadm, kubelet, and kubectl versions before upgrading.
+Perform these steps during a maintenance window to minimize disruption.
