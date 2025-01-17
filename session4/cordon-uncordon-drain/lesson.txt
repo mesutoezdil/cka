@@ -1,37 +1,44 @@
-Cordon - Uncordon - Node Drain
+### Cordon, Uncordon, and Node Drain in Kubernetes
 
-Kubernetes Cordon ve Uncordon
-Cordon:
-Düğümü yeni pod planlaması için kapatır.
+#### Kubernetes Cordon and Uncordon
 
+**Cordon:**
+Prevents new pods from being scheduled on a node.
+
+```bash
 kubectl cordon <node_name>
+```
 
-Etkisi: Yeni pod'lar atanmaz, ancak mevcut pod'lar çalışmaya devam eder.
+- **Effect:** New pods will not be assigned to the node, but existing pods will continue to run.
 
-Uncordon:
-Düğümü yeniden planlama için açar.
+**Uncordon:**
+Allows new pods to be scheduled on the node again.
 
+```bash
 kubectl uncordon <node_name>
+```
 
-Etkisi: Yeni pod'lar artık bu düğüme atanabilir.
+- **Effect:** The node becomes available for scheduling new pods.
 
+---
 
-Kubernetes Node Drain
-Drain:
-Düğümü bakıma almak veya kapatmak için tüm pod'ları güvenli bir şekilde başka düğümlere taşır.
+#### Kubernetes Node Drain
 
+**Drain:**
+Safely evicts all pods from a node to prepare it for maintenance or shutdown.
+
+```bash
 kubectl drain <node_name> --ignore-daemonsets
+```
 
-Etkisi: DaemonSet pod'ları hariç diğer tüm pod'lar başka düğümlere taşınır.
+- **Effect:** All pods, except DaemonSet pods, are moved to other nodes.
 
---ignore-daemonsets:
-DaemonSet pod'larını göz ardı eder, taşımaya çalışmaz.
+**Option:**
+- `--ignore-daemonsets`: Ignores DaemonSet pods and does not attempt to evict them.
 
+---
 
-
-Cordon: Bakım öncesinde yeni pod'ların düğüme atanmasını durdurmak için.
-Uncordon: Bakımdan sonra düğümü yeniden iş yüklerine açmak için.
-Drain: Düğümdeki pod'ları boşaltarak bakım veya kapatma işlemleri için hazır hale getirmek için.
-
-
-
+#### Summary of Use Cases:
+- **Cordon:** Stop new pods from being scheduled on a node before maintenance.
+- **Uncordon:** Re-enable the node for workloads after maintenance.
+- **Drain:** Evacuate pods from a node for safe maintenance or shutdown.
