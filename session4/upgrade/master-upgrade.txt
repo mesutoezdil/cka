@@ -1,60 +1,30 @@
-# Listede en son 1.31 sürümünü bulun.
-# 1.31.x-* biçiminde görünmelidir; burada x, en son yamadır. 
-sudo apt update 
+Kubernetes Upgrade Steps
+Find the Latest Patch Version for 1.31:
+Update package lists and check available versions of kubeadm.
+sudo apt update
 sudo apt-cache madison kubeadm
-
-
-# Listede en son 1.31 sürümünü bulun.
-# 1.31.x-* biçiminde görünmelidir; burada x, en son yamadır. 
-sudo apt update 
-sudo apt-cache madison kubeadm
-
-# Listede en son 1.31 sürümünü bulun.
-# 1.31.x-* biçiminde görünmelidir; burada x, en son yamadır. 
-sudo apt update 
-sudo apt-cache madison kubeadm
-
-
-# x'i bu yükseltme için seçtiğiniz yama sürümüyle değiştirin 
+Look for the latest version in the format 1.31.x-* where x is the latest patch version.
+Upgrade kubeadm:
+Replace x with the selected patch version.
 sudo kubeadm upgrade apply v1.31.x
-
-
-#Düğümü bakıma hazırlamak için planlanamaz olarak işaretleyin ve iş yüklerini kaldırın:
-“ilerki ders bölümlerinde ayrıntılı anlatım mevcut”
+Prepare the Node for Maintenance:
+Mark the node as unschedulable and drain workloads.
 kubectl drain <node-to-drain> --ignore-daemonsets
-
-
-
-#Kubelet ve kubectl'i yükseltin:
+Upgrade kubelet and kubectl:
+Unlock the packages, upgrade to the latest patch version, and lock them again.
 sudo apt-mark unhold kubelet kubectl && \
-sudo apt-get update && sudo apt-get install -y kubelet='1.31.x-*' kubectl='1.31.x-*' && \
+sudo apt-get update && sudo apt-get install -y kubelet=1.31.x-* kubectl=1.31.x-* && \
 sudo apt-mark hold kubelet kubectl
-
-
-
-#Kubelet'i yeniden başlatın
+Restart Kubelet:
+Reload the system daemon and restart kubelet.
 sudo systemctl daemon-reload
 sudo systemctl restart kubelet
-
-
-#Düğümü planlanabilir olarak işaretleyerek tekrar çevrimiçi hale getirin:
+Bring the Node Back Online:
+Mark the node as schedulable again.
 kubectl uncordon <node-to-uncordon>
-
-Kümenin durumunu doğrulayın 
+Verify Cluster Status:
+Check the state of the nodes to ensure everything is functioning correctly.
 kubectl get nodes
-
-
-
-
-notlar:
-
-apt-mark unhold kubeadm komutu, daha önce yükseltilmesi engellenmiş (hold durumuna alınmış) kubeadm paketinin kilidini açar ve güncellenmesine izin verir.
-
---ignore-daemonsets parametresi, DaemonSet kaynakları tarafından yönetilen pod'ların drain (boşaltma) işleminden etkilenmemesini sağlar. Yani, bu seçenekle, DaemonSet tarafından dağıtılan pod'lar drain işleminde durdurulmaz veya taşınmaz, böylece bu pod'lar küme üzerindeki node'dan kaldırılmaz.
-
-
-
-
-
-
-
+Notes
+apt-mark unhold kubeadm: Unlocks kubeadm for updates if previously held.
+--ignore-daemonsets: Ensures pods managed by DaemonSets are not stopped or moved during the drain process. These pods remain on the node even after draining.
