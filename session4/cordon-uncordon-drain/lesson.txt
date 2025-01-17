@@ -1,44 +1,21 @@
 ### Cordon, Uncordon, and Node Drain in Kubernetes
 
-#### Kubernetes Cordon and Uncordon
+Cordon: Prevents new pods from being scheduled on a node.  
+Command: `kubectl cordon <node_name>`  
+Effect: New pods will not be assigned to the node, but existing pods will continue to run.
 
-**Cordon:**
-Prevents new pods from being scheduled on a node.
+Uncordon: Allows new pods to be scheduled on the node again.  
+Command: `kubectl uncordon <node_name>`  
+Effect: The node becomes available for scheduling new pods.
 
-```bash
-kubectl cordon <node_name>
-```
+Node Drain: Safely evicts all pods from a node to prepare it for maintenance or shutdown.  
+Command: `kubectl drain <node_name> --ignore-daemonsets`  
+Effect: All pods, except DaemonSet pods, are moved to other nodes.
 
-- **Effect:** New pods will not be assigned to the node, but existing pods will continue to run.
+Option:  
+`--ignore-daemonsets`: Ignores DaemonSet pods and does not attempt to evict them.
 
-**Uncordon:**
-Allows new pods to be scheduled on the node again.
-
-```bash
-kubectl uncordon <node_name>
-```
-
-- **Effect:** The node becomes available for scheduling new pods.
-
----
-
-#### Kubernetes Node Drain
-
-**Drain:**
-Safely evicts all pods from a node to prepare it for maintenance or shutdown.
-
-```bash
-kubectl drain <node_name> --ignore-daemonsets
-```
-
-- **Effect:** All pods, except DaemonSet pods, are moved to other nodes.
-
-**Option:**
-- `--ignore-daemonsets`: Ignores DaemonSet pods and does not attempt to evict them.
-
----
-
-#### Summary of Use Cases:
-- **Cordon:** Stop new pods from being scheduled on a node before maintenance.
-- **Uncordon:** Re-enable the node for workloads after maintenance.
-- **Drain:** Evacuate pods from a node for safe maintenance or shutdown.
+Summary of Use Cases:  
+- Cordon: Stop new pods from being scheduled on a node before maintenance.  
+- Uncordon: Re-enable the node for workloads after maintenance.  
+- Drain: Evacuate pods from a node for safe maintenance or shutdown.
